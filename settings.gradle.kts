@@ -1,2 +1,2 @@
-rootProject.name = "LeetcodePractice"
+rootProject.name = "Algorithms"
 
