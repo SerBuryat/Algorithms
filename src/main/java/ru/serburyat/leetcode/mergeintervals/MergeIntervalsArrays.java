@@ -1,6 +1,5 @@
 package ru.serburyat.leetcode.mergeintervals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -18,24 +17,19 @@ public class MergeIntervalsArrays {
 
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
 
-        var indexes = new ArrayList<Integer>();
-        for (int i = 0; i < intervals.length - 1; i++) {
-            var start = intervals[i];
-            var next = intervals[i + 1];
-
+        int k = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            var start = intervals[k];
+            var next = intervals[i];
             if (start[1] < next[0]) {
-                indexes.add(i);
+                k++;
+                intervals[k] = next;
             } else {
-                next[0] = start[0];
-                next[1] = Math.max(start[1], next[1]);
+                start[1] = Math.max(start[1], next[1]);
             }
         }
 
-        indexes.add(intervals.length - 1);
-
-        return indexes.stream()
-                .map(index -> intervals[index])
-                .toArray(int[][]::new);
+        return Arrays.copyOfRange(intervals, 0, k + 1);
     }
 
 }
